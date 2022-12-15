@@ -1,0 +1,7 @@
+.todos {
+  width: 60%;
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
