@@ -1,18 +1,133 @@
-import { Fragment, useState } from "react";
+import { Fragment, useReducer, useState } from "react";
 import styles from "./Form.module.css";
 
-const Form = () => {
+const formReducer = (prevState, action) => {
+  if (action.type === "TITLE") {
+    return {
+      ...prevState,
+      titleValue: action.value,
+      titleIsValid: action.value.trim().length > 0,
+      formIsValid:
+        action.value.trim().length > 0 &&
+        prevState.dateIsValid &&
+        prevState.descriptionIsValid,
+    };
+  }
+  if (action.type === "DATE") {
+    const minDate = new Date("2022-01-01");
+    const inputDate = new Date(action.value);
+    return {
+      ...prevState,
+      dateValue: action.value,
+      dateIsValid: inputDate > minDate,
+      formIsValid:
+        prevState.titleIsValid &&
+        inputDate > minDate &&
+        prevState.descriptionIsValid,
+    };
+  }
+  if (action.type === "DESCRIPTION") {
+    return {
+      ...prevState,
+      descriptionValue: action.value,
+      descriptionIsValid: action.value.trim().length > 0,
+      formIsValid:
+        prevState.titleIsValid &&
+        prevState.dateIsValid &&
+        action.value.trim().length > 0,
+    };
+  }
+  return {
+    titleValue: "",
+    titleIsValid: null,
+    dateValue: "",
+    dateIsValid: null,
+    descriptionValue: "",
+    descriptionIsValid: null,
+    formIsValid: null,
+  };
+};
+
+const Form = (props) => {
+  //STATE MANAGEMENT
+  const [formState, dispatchFormState] = useReducer(formReducer, {
+    titleValue: "",
+    titleIsValid: null,
+    dateValue: "",
+    dateIsValid: null,
+    descriptionValue: "",
+    descriptionIsValid: null,
+    formIsValid: null,
+  });
+
   const [isFormOpened, setIsFormOpened] = useState(false);
 
+  //States for invalid input style
+  const [titleInputClass, setTitleInputClass] = useState("");
+  const [dateInputClass, setDateInputClass] = useState("");
+  const [descriptionInputClass, setDescriptionInputClass] = useState("");
+
+  // FORM INPUT HANDLERS
+  const titleInputHandler = (e) => {
+    dispatchFormState({ type: "TITLE", value: e.target.value });
+  };
+  const dateInputHandler = (e) => {
+    dispatchFormState({ type: "DATE", value: e.target.value });
+  };
+  const descriptionInputHandler = (e) => {
+    dispatchFormState({ type: "DESCRIPTION", value: e.target.value });
+  };
+  //SHRINK / EXTEND FORM HANDLERS
   const openFormHandler = function () {
     setIsFormOpened(true);
   };
   const closeFormHandler = function () {
     setIsFormOpened(false);
+    //reset invalid input style
+    setTitleInputClass("");
+    setDateInputClass("");
+    setDescriptionInputClass("");
   };
 
+  //FORM FIELDS VALIDATION
+  const invalidInputStyle = `${styles["invalid-input"]}`;
+  const titleValidationHandler = () => {
+    if (formState.titleIsValid) {
+      setTitleInputClass("");
+      return;
+    }
+    setTitleInputClass(invalidInputStyle);
+  };
+
+  const dateValidationHandler = () => {
+    if (formState.dateIsValid) {
+      setDateInputClass("");
+      return;
+    }
+    setDateInputClass(invalidInputStyle);
+  };
+
+  const descriptionValidationHandler = () => {
+    if (formState.descriptionIsValid) {
+      setDescriptionInputClass("");
+      return;
+    }
+    setDescriptionInputClass(invalidInputStyle);
+  };
+  // SUBMIT FORM HANDLER
   const submitFormHandler = function (e) {
     e.preventDefault();
+    if (!formState.formIsValid) return;
+
+    //Adding id to submitted task in order to manipulate it in the future
+    const random = (Math.random() * (100 - 1)).toFixed(4);
+    const taskToAdd = {
+      ...formState,
+      id: `${formState.titleValue}-${random}`,
+    };
+    props.onFormSubmit(taskToAdd);
+    //clearing the form after submission
+    dispatchFormState({});
   };
 
   return (
@@ -35,16 +150,35 @@ const Form = () => {
           <div className={styles["form--container__input-top"]}>
             <div className={styles["form--container__title"]}>
               <label>Title</label>
-              <input type="text" />
+              <input
+                value={formState.titleValue}
+                className={titleInputClass}
+                type="text"
+                onChange={titleInputHandler}
+                onBlur={titleValidationHandler}
+              />
             </div>
             <div>
               <label>Date</label>
-              <input type="date" />
+              <input
+                value={formState.dateValue}
+                className={dateInputClass}
+                type="date"
+                onChange={dateInputHandler}
+                onBlur={dateValidationHandler}
+              />
             </div>
           </div>
           <div className={styles["form--container__description"]}>
             <label>Description</label>
-            <textarea name="Description" rows={3}></textarea>
+            <textarea
+              value={formState.descriptionValue}
+              className={descriptionInputClass}
+              name="Description"
+              rows={3}
+              onChange={descriptionInputHandler}
+              onBlur={descriptionValidationHandler}
+            ></textarea>
           </div>
           <div className={styles["form--container__button--container"]}>
             <button className={styles["form--container__button"]}>ADD</button>

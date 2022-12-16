@@ -4,7 +4,6 @@
   padding: 1rem 2rem;
   border-radius: 1rem;
   animation: show-main 500ms ease-in-out;
-  max-height: 60vh;
   transition: max-height 1s;
 }
 

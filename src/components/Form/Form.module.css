@@ -30,6 +30,7 @@
 
 .form--container__button:hover {
   background-color: #d8cd34cc;
+  cursor: pointer;
 }
 
 .form--container__button--container {
@@ -39,11 +40,19 @@
 }
 
 /* General Input fields */
+
 .form--container_opened input,
 textarea {
   border: none;
   border-radius: 3px;
 }
+
+.form--container_opened input.invalid-input,
+textarea.invalid-input {
+  border: red solid 2px;
+  background-color: rgba(235, 42, 42, 0.473);
+}
+
 .form--container_opened input:focus,
 textarea:focus {
   outline: none;
