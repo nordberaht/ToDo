@@ -3,10 +3,26 @@ import Card from "../UI/Card";
 import styles from "./ToDos.module.css";
 import List from "../List/List";
 import ListContextProvider from "../../store/list-context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ToDos = () => {
   const [tasks, setTasks] = useState([]);
+  const [isListEmpty, setIsListEmpty] = useState(true);
+
+  //LOCAL STORAGE
+  useEffect(() => {
+    setTasks(JSON.parse(localStorage.getItem("tasks")));
+  }, []);
+
+  //Show/Hide list card based on list length
+  useEffect(() => {
+    if (tasks.length === 0) setIsListEmpty(true);
+    else {
+      setIsListEmpty(false);
+    }
+    //On every task list change update tasks object stored in local storage
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const onFormSubmitHandler = (obj) => {
     setTasks((prev) => {
@@ -15,11 +31,9 @@ const ToDos = () => {
   };
 
   const onTaskRemoveHandler = (id) => {
-    console.log("RY");
     const updatedTasks = tasks.filter((task) => {
       return task.id !== id;
     });
-    console.log(updatedTasks);
     setTasks(updatedTasks);
   };
 
@@ -29,9 +43,11 @@ const ToDos = () => {
         <Card>
           <Form onFormSubmit={onFormSubmitHandler}></Form>
         </Card>
-        <Card>
-          <List onTaskRemoveHandler={onTaskRemoveHandler} />
-        </Card>
+        {isListEmpty || (
+          <Card>
+            <List onTaskRemoveHandler={onTaskRemoveHandler} />
+          </Card>
+        )}
       </div>
     </ListContextProvider>
   );

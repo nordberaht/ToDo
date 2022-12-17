@@ -26,13 +26,17 @@ const ListItem = (props) => {
     props.onTaskRemoveHandler(props.id);
   };
 
+  const showTask = (event) => {
+    props.showTaskView(event);
+  };
+
   return (
-    <li className={styles["list-item"]}>
+    <li className={styles["list-item"]} onClick={showTask} id={props.id}>
       <div className={styles["list-item__date"]}>
         <div className={styles["list-item__date-day"]}>{`${day} ${month}`}</div>
         <div className={styles["list-item__date-year"]}>{year}</div>
       </div>
-      <div>{props.title}</div>
+      <div className={styles.titleStyle}>{props.title}</div>
       <div className={styles["list-item__buttons"]}>
         <input
           className={styles["list-item__done-button"]}

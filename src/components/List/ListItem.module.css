@@ -33,6 +33,10 @@
   font-weight: 700;
 }
 
+.titleStyle {
+  word-break: break-all;
+}
+
 .list-item__buttons {
   display: flex;
   align-items: center;
@@ -60,4 +64,13 @@
   padding: 0;
   height: 1.7rem;
   width: 1.7rem;
+}
+
+@media (width < 1000px) {
+  html {
+    font-size: 12px;
+  }
+  .list-item__date {
+    display: none;
+  }
 }

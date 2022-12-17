@@ -1,0 +1,47 @@
+.error-modal-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+h3,
+p {
+  margin: 0;
+}
+.error-modal-container-inner {
+  border: solid 1px black;
+  background-color: aliceblue;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  max-width: 30rem;
+}
+.error-modal-container-inner button {
+  border: #968d10 solid 0.1rem;
+  background-color: #00000000;
+  font-size: 0.8rem;
+  color: #837b0f;
+  padding: 0.5rem 1.2rem;
+  border-radius: 2rem;
+}
+.error-modal-container-inner button:hover {
+  background-color: #d8cd34cc;
+  cursor: pointer;
+}
+
+.center-button {
+  display: flex;
+  justify-content: center;
+}
+
+.error-modal-container-inner p {
+  margin: 1rem 0rem;
+}
+
+.backdrop {
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.315);
+  z-index: 1;
+}

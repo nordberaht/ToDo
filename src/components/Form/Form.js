@@ -1,5 +1,6 @@
 import { Fragment, useReducer, useState } from "react";
 import styles from "./Form.module.css";
+import ErrorModal from "../modal/ErrorModal";
 
 const formReducer = (prevState, action) => {
   if (action.type === "TITLE") {
@@ -67,6 +68,14 @@ const Form = (props) => {
   const [dateInputClass, setDateInputClass] = useState("");
   const [descriptionInputClass, setDescriptionInputClass] = useState("");
 
+  const [errorModal, setErrorModal] = useState(false);
+
+  //CLEAR VALIDATION FORM INPUTS
+  const clearInputs = () => {
+    setTitleInputClass("");
+    setDateInputClass("");
+    setDescriptionInputClass("");
+  };
   // FORM INPUT HANDLERS
   const titleInputHandler = (e) => {
     dispatchFormState({ type: "TITLE", value: e.target.value });
@@ -84,9 +93,7 @@ const Form = (props) => {
   const closeFormHandler = function () {
     setIsFormOpened(false);
     //reset invalid input style
-    setTitleInputClass("");
-    setDateInputClass("");
-    setDescriptionInputClass("");
+    clearInputs();
   };
 
   //FORM FIELDS VALIDATION
@@ -117,7 +124,10 @@ const Form = (props) => {
   // SUBMIT FORM HANDLER
   const submitFormHandler = function (e) {
     e.preventDefault();
-    if (!formState.formIsValid) return;
+    if (!formState.formIsValid) {
+      setErrorModal(true);
+      return;
+    }
 
     //Adding id to submitted task in order to manipulate it in the future
     const random = (Math.random() * (100 - 1)).toFixed(4);
@@ -130,8 +140,15 @@ const Form = (props) => {
     dispatchFormState({});
   };
 
+  //MODAL HANDLER
+  const closeErrorModalHandler = () => {
+    setErrorModal(false);
+    clearInputs();
+  };
+
   return (
     <Fragment>
+      {errorModal && <ErrorModal onConfirm={closeErrorModalHandler} />}
       {isFormOpened || (
         <div className={styles["form--container_closed"]}>
           <button
@@ -151,6 +168,7 @@ const Form = (props) => {
             <div className={styles["form--container__title"]}>
               <label>Title</label>
               <input
+                maxLength={45}
                 value={formState.titleValue}
                 className={titleInputClass}
                 type="text"
@@ -172,6 +190,7 @@ const Form = (props) => {
           <div className={styles["form--container__description"]}>
             <label>Description</label>
             <textarea
+              maxLength={200}
               value={formState.descriptionValue}
               className={descriptionInputClass}
               name="Description"

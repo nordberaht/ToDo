@@ -2,6 +2,7 @@ import { Fragment, useState } from "react";
 
 import ToDos from "./components/Form/ToDos";
 import Header from "./components/Header/Header";
+import ErrorModal from "./components/modal/ErrorModal";
 
 function App() {
   const [showMain, setShowMain] = useState(false);

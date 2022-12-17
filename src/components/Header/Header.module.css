@@ -1,6 +1,7 @@
 /* HEADER AT LOAD */
 
 .header-container {
+  position: fixed;
   background: rgb(136, 136, 25);
   background: linear-gradient(
     141deg,
