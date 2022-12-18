@@ -16,8 +16,8 @@ const ToDos = () => {
 
   //Show/Hide list card based on list length
   useEffect(() => {
-    if (tasks.length === 0) setIsListEmpty(true);
-    else {
+    if (tasks?.length === 0) setIsListEmpty(true);
+    if (tasks?.length > 0) {
       setIsListEmpty(false);
     }
     //On every task list change update tasks object stored in local storage
@@ -26,7 +26,8 @@ const ToDos = () => {
 
   const onFormSubmitHandler = (obj) => {
     setTasks((prev) => {
-      return [...prev, obj];
+      if (prev) return [...prev, obj];
+      return [obj];
     });
   };
 

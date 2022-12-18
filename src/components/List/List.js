@@ -26,7 +26,7 @@ const List = (props) => {
     <Fragment>
       {showTask && <TaskView task={task} closeTask={closeTaskView} />}
       <ul className={styles["list-of-items"]}>
-        {tasksList.map((task) => (
+        {tasksList?.map((task) => (
           <ListItem
             showTaskView={showTaskView}
             onTaskRemoveHandler={props.onTaskRemoveHandler}
