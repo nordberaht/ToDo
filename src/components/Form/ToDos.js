@@ -46,7 +46,10 @@ const ToDos = () => {
     checkedTask.checked = e.target.checked;
     //Update list
     setTasks((prev) => {
-      return prev.splice(checkedTaskIndex, 1, checkedTask);
+      const updatedAr = [...prev];
+      updatedAr.splice(checkedTaskIndex, 1, checkedTask);
+
+      return updatedAr;
     });
   };
 
