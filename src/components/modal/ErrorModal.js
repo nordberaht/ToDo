@@ -1,7 +1,6 @@
 import styles from "./ErrorModal.module.css";
 import ReactDOM from "react-dom";
 import { Fragment } from "react";
-import Card from "../UI/Card";
 
 const Overlay = (props) => {
   return (

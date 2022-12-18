@@ -9,7 +9,7 @@ const ToDos = () => {
   const [tasks, setTasks] = useState([]);
   const [isListEmpty, setIsListEmpty] = useState(true);
 
-  //LOCAL STORAGE
+  //LOCAL STORAGE - at the first load of page get tasks from local storage if any
   useEffect(() => {
     setTasks(JSON.parse(localStorage.getItem("tasks")));
   }, []);
@@ -38,6 +38,18 @@ const ToDos = () => {
     setTasks(updatedTasks);
   };
 
+  const onCheckHandler = (e, id) => {
+    //Find task in the list
+    const checkedTaskIndex = tasks.findIndex((task) => id === task.id);
+    const checkedTask = tasks.find((task) => id === task.id);
+    //Update task check value
+    checkedTask.checked = e.target.checked;
+    //Update list
+    setTasks((prev) => {
+      return prev.splice(checkedTaskIndex, 1, checkedTask);
+    });
+  };
+
   return (
     <ListContextProvider tasks={tasks}>
       <div className={styles["todos"]}>
@@ -46,7 +58,10 @@ const ToDos = () => {
         </Card>
         {isListEmpty || (
           <Card>
-            <List onTaskRemoveHandler={onTaskRemoveHandler} />
+            <List
+              onTaskRemoveHandler={onTaskRemoveHandler}
+              onCheckHandler={onCheckHandler}
+            />
           </Card>
         )}
       </div>

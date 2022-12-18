@@ -19,7 +19,7 @@
 
 .inner {
   background-color: rgb(238, 238, 238);
-  max-width: 20rem;
+  max-width: 30rem;
   max-height: 15rem;
   border-radius: 10px;
   border: solid 1px black;
@@ -29,12 +29,12 @@
 }
 
 h3 {
-  word-break: break-all;
+  word-break: keep-all;
 }
 
 .description {
   margin-top: 1rem;
-  word-break: break-all;
+  word-break: keep-all;
 }
 
 @keyframes appearance {
@@ -43,5 +43,11 @@ h3 {
   }
   to {
     opacity: 1;
+  }
+}
+
+@media (width < 700px) {
+  .inner {
+    max-width: 20rem;
   }
 }

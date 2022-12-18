@@ -29,9 +29,11 @@ const List = (props) => {
         {tasksList?.map((task) => (
           <ListItem
             showTaskView={showTaskView}
+            onTaskCheck={props.onCheckHandler}
             onTaskRemoveHandler={props.onTaskRemoveHandler}
             title={task.titleValue}
             date={task.dateValue}
+            checked={task.checked}
             id={task.id}
             key={task.id}
           />

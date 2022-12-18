@@ -46,6 +46,7 @@ const formReducer = (prevState, action) => {
     descriptionValue: "",
     descriptionIsValid: null,
     formIsValid: null,
+    checked: false,
   };
 };
 
@@ -59,6 +60,7 @@ const Form = (props) => {
     descriptionValue: "",
     descriptionIsValid: null,
     formIsValid: null,
+    checked: false,
   });
 
   const [isFormOpened, setIsFormOpened] = useState(false);

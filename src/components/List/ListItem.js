@@ -30,6 +30,10 @@ const ListItem = (props) => {
     props.showTaskView(event);
   };
 
+  const onCheck = (e) => {
+    props.onTaskCheck(e, props.id);
+  };
+
   return (
     <li className={styles["list-item"]} onClick={showTask} id={props.id}>
       <div className={styles["list-item__date"]}>
@@ -41,6 +45,8 @@ const ListItem = (props) => {
         <input
           className={styles["list-item__done-button"]}
           type="checkbox"
+          onChange={onCheck}
+          checked={props.checked}
         ></input>
 
         <button
