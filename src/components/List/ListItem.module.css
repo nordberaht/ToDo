@@ -7,7 +7,13 @@
   border-radius: 16px;
   margin-top: 1rem;
   padding: 0.7rem 1rem;
+  transition: 0.7s;
 }
+
+.checked {
+  background-color: #5a551167;
+}
+
 .list-item:first-child {
   margin-top: 0rem;
 }
@@ -56,8 +62,7 @@
   background-color: #d8cd34cc;
   cursor: pointer;
 }
-
-.list-item__done-button:checked {
+.list-item__done-button {
   background-color: red;
 }
 .list-item__done-button {

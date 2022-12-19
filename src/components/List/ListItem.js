@@ -1,3 +1,4 @@
+import { useState } from "react";
 import TrashIcon from "../../Icons/trash-icon";
 import styles from "./ListItem.module.css";
 
@@ -21,6 +22,12 @@ const ListItem = (props) => {
   const day = date.getDate();
   const month = months.get(date.getMonth());
   const year = date.getFullYear();
+  const classes = `${
+    props.checked
+      ? `${styles["list-item"]} ${styles.checked}`
+      : `${styles["list-item"]}`
+  }`;
+  const [listItemClass, setListItemClass] = useState(classes);
 
   const deleteTask = () => {
     props.onTaskRemoveHandler(props.id);
@@ -32,10 +39,17 @@ const ListItem = (props) => {
 
   const onCheck = (e) => {
     props.onTaskCheck(e, props.id);
+    setListItemClass(
+      `${
+        props.checked
+          ? `${styles["list-item"]}`
+          : `${styles["list-item"]} ${styles.checked}`
+      }`
+    );
   };
 
   return (
-    <li className={styles["list-item"]} onClick={showTask} id={props.id}>
+    <li className={listItemClass} onClick={showTask} id={props.id}>
       <div className={styles["list-item__date"]}>
         <div className={styles["list-item__date-day"]}>{`${day} ${month}`}</div>
         <div className={styles["list-item__date-year"]}>{year}</div>
