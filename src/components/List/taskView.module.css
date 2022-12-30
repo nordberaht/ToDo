@@ -82,4 +82,8 @@ h3 {
     height: 2rem;
     width: 2rem;
   }
+  .outter {
+    width: 90%;
+    min-width: 220px;
+  }
 }
