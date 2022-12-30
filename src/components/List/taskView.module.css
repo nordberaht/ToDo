@@ -15,11 +15,12 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
+  width: 50%;
 }
 
 .inner {
+  position: relative;
   background-color: rgb(238, 238, 238);
-  max-width: 30rem;
   max-height: 20rem;
   border-radius: 10px;
   border: solid 1px black;
@@ -38,8 +39,33 @@ h3 {
   font-style: italic;
 }
 .description {
+  text-align: left;
+  min-height: 5rem;
   margin-top: 1rem;
   word-break: break-word;
+}
+.descriptionEdit {
+  font-family: inherit;
+  display: block;
+  width: 100%;
+  text-align: left;
+  min-height: 5rem;
+  margin-top: 1rem;
+  word-break: break-word;
+}
+.wrong-edit {
+  border: solid 1px rgb(230, 2, 2);
+  background-color: rgba(255, 0, 0, 0.281);
+}
+
+.btn {
+  height: 1.5rem;
+  width: 1.5rem;
+  padding: 0;
+  border: none;
+  position: absolute;
+  top: 0.8rem;
+  right: 2rem;
 }
 
 @keyframes appearance {
@@ -48,5 +74,12 @@ h3 {
   }
   to {
     opacity: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .btn {
+    height: 2rem;
+    width: 2rem;
   }
 }

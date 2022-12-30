@@ -53,6 +53,18 @@ const ToDos = () => {
     });
   };
 
+  const onTaskEdit = (id, titleValue, descriptionValue) => {
+    setTasks((prevTasks) => {
+      const newTasks = prevTasks.map((task) => {
+        if (task.id === id) {
+          task.titleValue = titleValue;
+          task.descriptionValue = descriptionValue;
+        }
+        return task;
+      });
+      return newTasks;
+    });
+  };
   return (
     <ListContextProvider tasks={tasks}>
       <div className={styles["todos"]}>
@@ -64,6 +76,7 @@ const ToDos = () => {
             <List
               onTaskRemoveHandler={onTaskRemoveHandler}
               onCheckHandler={onCheckHandler}
+              onTaskEdit={onTaskEdit}
             />
           </Card>
         )}

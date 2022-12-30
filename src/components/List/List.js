@@ -24,7 +24,13 @@ const List = (props) => {
 
   return (
     <Fragment>
-      {showTask && <TaskView task={task} closeTask={closeTaskView} />}
+      {showTask && (
+        <TaskView
+          task={task}
+          closeTask={closeTaskView}
+          onTaskEdit={props.onTaskEdit}
+        />
+      )}
       <ul className={styles["list-of-items"]}>
         {tasksList?.map((task) => (
           <ListItem
